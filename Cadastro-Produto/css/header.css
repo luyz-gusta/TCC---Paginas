@@ -1,0 +1,44 @@
+header{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 100px;
+    gap: 280px;
+    height: 15vh;
+    background-color: var(--primary-color);
+}
+
+.logo{
+    display: flex;
+    gap: 15px;
+}
+
+header i{
+    font-size: 4.5rem;
+    color: black;
+}
+
+.nome-marca{
+    font-size: 4rem;
+    color: black;
+    font-weight: 700;
+}
+
+.button-sair{
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    cursor: pointer;
+}
+
+.button-sair i{
+    font-size: 2.8rem;
+    color: #000;
+}
+
+.text-sair{
+    font-weight: 700;
+    font-size: 3rem;
+    height: 4rem;
+    color: #000;
+}

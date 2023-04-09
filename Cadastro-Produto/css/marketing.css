@@ -1,0 +1,10 @@
+.box__marketing{
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(90deg, #FECB3E 0%, #FFD664 100%);
+    width: 100%;
+}
+
+#foto__propaganda{
+    width: 100%;
+}
