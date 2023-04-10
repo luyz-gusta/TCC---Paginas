@@ -71,14 +71,24 @@
                         required>
                     <input type="text" id="peso" class="modal-field" placeholder="Peso" required>
                     <input type="text" id="cupom" class="modal-field" placeholder="Cupom" required>
-                    <input type="text" id="preco" class="modal-field" placeholder="Preço" required>
-                    <!-- <input type="text" id="descricao" class="modal-descricao" placeholder="Descrição" required> -->
-                    <textarea name="descricao" id="descricao" class="modal-descricao" placeholder="Descrição" cols="30" rows="10" required ></textarea>
-                </form>
-                <footer class="modal-footer">
-                    <button id="salvar" class="button green">Salvar</button>
-                    <button id="cancelar" class="button blue">Cancelar</button>
-                </footer>
+                    <input type="text" id="preco-original" class="modal-field" placeholder="Preço Original" required>
+                    <input type="text" id="preco-desconto" class="modal-field" placeholder="Preço Com Desconto"
+                        required>
+                    <textarea name="descricao" id="descricao" class="modal-descricao" placeholder="Descrição" cols="30"
+                        rows="10" required></textarea>
+                    <!-- <label class="input-personalizado">
+                        <span class="botao-selecionar">Selecione uma foto para o Produto</span>
+                        <img class="imagem" />
+                        <input type="file" class="input-file" accept="image/*">
+                    </label> -->
+                    <div class="modal-field">
+                        <label>Escolha uma imagem para o produto</label>
+                        <input type="file" name="foto-produto" id="foto">
+                    </div>
+                    <footer class="modal-footer">
+                        <button id="salvar" class="button green">Salvar</button>
+                        <button id="cancelar" class="button blue">Cancelar</button>
+                    </footer>
             </div>
         </div>
     </main>

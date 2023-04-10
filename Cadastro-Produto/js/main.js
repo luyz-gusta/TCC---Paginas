@@ -14,6 +14,7 @@ const clearFields = () => {
     fields.forEach(field => field.value = "")
     document.getElementById('nome').dataset.index = 'new'
     document.querySelector(".modal-header>h2").textContent = 'Novo Produto'
+    document.getElementById('foto').value = ''
 }
 
 const clearDescricao = () => {
@@ -64,17 +65,26 @@ const salvarProduto = () => {
         const produto = {
             nome: document.getElementById('nome').value,
             peso: document.getElementById('peso').value,
-            preco: document.getElementById('preco').value,
+            preco_original: document.getElementById('preco-original').value,
+            preco_desconto: document.getElementById('preco-desconto').value,
             cupom: document.getElementById('cupom').value,
             descricao: document.getElementById('descricao').value,
         }
-        createProduto(produto)
-        updateListaProduto()
-        closeModal()
+        const index = document.getElementById('nome').dataset.index
+        if (index == 'new') {
+            createProduto(produto)
+            updateListaProduto()
+            closeModal()
+        } else {
+            updateProduto(index, produto)
+            updateListaProduto()
+            closeModal()
+        }
+
     }
 }
 
-const createCard = (produto) => {
+const createCard = (produto, index) => {
     const newCard = document.createElement('div')
     newCard.classList.add('card')
     newCard.innerHTML = `
@@ -82,11 +92,11 @@ const createCard = (produto) => {
     <div class="card-body">
         <div class="card-top">
             <h5 class="card-title">${produto.nome}</h5>
-            <p class="card-text">R$ ${produto.preco}</p>
+            <p class="card-text">R$ ${produto.preco_original}</p>
         </div>
         <div class="card-bottom">
-            <button type="button" class="btn-editar">Editar</button>
-            <button type="button" class="btn-excluir">Excluir</button>
+            <button type="button" class="btn-editar" id="edit-${index}">Editar</button>
+            <button type="button" class="btn-excluir" id="delete-${index}">Excluir</button>
         </div>
     </div>
     `
@@ -96,12 +106,47 @@ const createCard = (produto) => {
 const clearLista = () => {
     const cards = document.querySelectorAll('.container__produtos .card')
     cards.forEach(card => card.parentNode.removeChild(card))
-}   
+}
 
 const updateListaProduto = () => {
     const dbProduto = readProduto()
     clearLista()
     dbProduto.forEach(createCard)
+}
+
+const fillFields = (produto) => {
+    document.getElementById('nome').value = produto.nome
+    document.getElementById('peso').value = produto.peso
+    document.getElementById('preco-original').value = produto.preco_original
+    document.getElementById('preco-desconto').value = produto.preco_desconto
+    document.getElementById('cupom').value = produto.cupom
+    document.getElementById('descricao').value = produto.descricao
+    document.getElementById('nome').dataset.index = produto.index
+}
+
+const editProduto = (index) => {
+    const produto = readProduto()[index]
+    produto.index = index
+    fillFields(produto)
+    openModal()
+}
+
+const editDelete = (event) => {
+    if (event.target.type == 'button') {
+
+        const [action, index] = event.target.id.split('-')
+
+        if (action == 'edit') {
+            editProduto(index)
+        } else {
+            const produto = readProduto()[index]
+            const response = confirm(`Deseja realmente excluir o produto ${produto.nome}`)
+            if (response) {
+                deleteProduto(index)
+                updateListaProduto()
+            }
+        }
+    }
 }
 
 updateListaProduto()
@@ -119,3 +164,6 @@ document.getElementById('cancelar')
 
 document.getElementById('salvar')
     .addEventListener('click', salvarProduto)
+
+document.querySelector('.container__produtos')
+    .addEventListener('click', editDelete)
